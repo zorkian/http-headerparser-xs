@@ -5,7 +5,7 @@ char *              STRINGMAYBEUNDEF
 OUTPUT
 HTTPHEADERS_REF
                     // used to use "CLASS"
-                    sv_setref_pv( $arg, "Perlbal::XS::HTTPHeaders", (void*)$var );
+                    sv_setref_pv( $arg, "HTTP::XS::Headers", (void*)$var );
 STRINGMAYBEUNDEF
                     warn(\"${Package}::$func_name() -- UNABLE TO RETURN CHAR *\");
 

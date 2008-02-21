@@ -1,12 +1,13 @@
 /******************************************************************************
- * Perlbal XS HTTPHeaders class                                               *
+ * XS HTTPHeaders class                                                       *
  * Written by Mark Smith (junior@sixapart.com)                                *
  *                                                                            *
  * This program is free software; you can redistribute it and/or modify it    *
  * under the same terms as Perl itself.                                       *
  *                                                                            *
+ * Copyright 2004-2008 Mark Smith.                                            *
  * Copyright 2004 Danga Interactive, Inc.                                     *
- * Copyright 2005 Six Apart, Ltd.                                             *
+ * Copyright 2005-2007 Six Apart, Ltd.                                        *
  ******************************************************************************/
 
 #include "EXTERN.h"
@@ -19,7 +20,7 @@
 
 #include "const-c.inc"
 
-MODULE = Perlbal::XS::HTTPHeaders		PACKAGE = Perlbal::XS::HTTPHeaders		
+MODULE = HTTP:XS::Headers		PACKAGE = HTTP::XS::Headers		
 
 INCLUDE: const-xs.inc
 

@@ -1,6 +1,11 @@
 Revision history for Perl extension HTTPHeaders.  See README for info.
 
+0.20  Wed Feb 20 15:33:09 PST 2008
     - add setter for uri field, and test
+    - remove overall dependence on Perlbal for normal usage
+        (as suggested by Andy Grundman)
+    - added getHeaders() method that returns a hashref of all headers.
+        (feature by Andy Grundman)
 
 0.19  Tue Sep 19 07:54:51 UTC 2006
     - fix number of tests from 28 to 31 to enable successfull make test

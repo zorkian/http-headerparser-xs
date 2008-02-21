@@ -10,5 +10,6 @@ typemap
 t/HTTPHeaders.t
 fallback/const-c.inc
 fallback/const-xs.inc
+lib/HTTP/XS/Headers.pm
 lib/Perlbal/XS/HTTPHeaders.pm
 META.yml                                 Module meta-data (added by MakeMaker)

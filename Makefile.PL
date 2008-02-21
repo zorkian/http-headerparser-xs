@@ -3,15 +3,12 @@ use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
-    NAME              => 'Perlbal::XS::HTTPHeaders',
-    VERSION_FROM      => 'lib/Perlbal/XS/HTTPHeaders.pm', # finds $VERSION
-    PREREQ_PM         => {
-        'Perlbal' => 0,
-        'Perlbal::HTTPHeaders' => 0,
-    }, # e.g., Module::Name => 1.1
+    NAME              => 'HTTP::XS::Headers',
+    VERSION_FROM      => 'lib/HTTP/XS/Headers.pm', # finds $VERSION
+    PREREQ_PM         => {},
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
-      (ABSTRACT_FROM  => 'lib/Perlbal/XS/HTTPHeaders.pm', # retrieve abstract from module
-       AUTHOR         => 'Mark Smith <junior@danga.com>') : ()),
+      (ABSTRACT_FROM  => 'lib/HTTP/XS/Headers.pm', # retrieve abstract from module
+       AUTHOR         => 'Mark Smith <mark@xb95.com>') : ()),
     LIBS              => ['-lstdc++'], # e.g., '-lm'
     DEFINE            => '', # e.g., '-DHAVE_SOMETHING'
     INC               => '-I.', # e.g., '-I. -I/usr/include/other'
@@ -29,7 +26,7 @@ if  (eval {require ExtUtils::Constant; 1}) {
   my @names = (qw(H_REQUEST H_RESPONSE M_DELETE M_GET
 		 M_OPTIONS M_POST M_PUT M_HEAD));
   ExtUtils::Constant::WriteConstants(
-                                     NAME         => 'Perlbal::XS::HTTPHeaders',
+                                     NAME         => 'HTTP::XS::Headers',
                                      NAMES        => \@names,
                                      DEFAULT_TYPE => 'IV',
                                      C_FILE       => 'const-c.inc',
