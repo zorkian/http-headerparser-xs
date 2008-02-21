@@ -44,6 +44,9 @@ HTTPHeaders::DESTROY()
 SV *
 HTTPHeaders::getReconstructed()
 
+HV *
+HTTPHeaders::getHeaders()
+
 SV *
 HTTPHeaders::getHeader( which )
     char *which

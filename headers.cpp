@@ -404,6 +404,22 @@ Header *HTTPHeaders::findHeader(char *which, int len) {
     return NULL;
 }
 
+HV *HTTPHeaders::getHeaders() {
+    HV *headers = (HV *)sv_2mortal( (SV *)newHV() );
+        
+    for ( Header *cur = hdrs; cur; cur = cur->next ) {
+        if ( hv_store( headers, cur->key, cur->keylen, cur->sv_value, 0 ) != NULL ) {
+            SvREFCNT_inc( cur->sv_value );
+        }
+        else {
+            hv_clear( headers );
+            break;
+        }
+    }
+    
+    return headers;
+}
+
 SV *HTTPHeaders::getHeader(char *which) {
     Header *hdr = findHeader(which);
     if (!hdr)

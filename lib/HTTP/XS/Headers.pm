@@ -163,7 +163,7 @@ HTTP::XS::Headers - XS extension for processing HTTP headers.
 
   use HTTP::XS::Headers;
 
-  my $hdr = HTTP::XS::Headers->new("GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n");
+  my $hdr = HTTP::XS::Headers->new( \"GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n" );
   if ($hdr->getMethod == M_GET()) {
     print "GET: ", $hdr->getURI(), "\n";
     print "Connection: ", $hdr->getHeader('Connection'), "\n";

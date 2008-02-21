@@ -60,6 +60,7 @@ class HTTPHeaders {
         SV *getReconstructed();
 
         /* get and set header values */
+        HV *getHeaders();
         SV *getHeader(char *which);
         void setHeader(char *which, char *value);
 

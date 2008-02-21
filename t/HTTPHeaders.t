@@ -6,7 +6,7 @@
 # change 'tests => 2' to 'tests => last_test_to_print';
 
 #die('update use test more line');
-use Test::More tests => 37;
+use Test::More tests => 39;
 BEGIN { use_ok('HTTP::XS::Headers') };
 
 
@@ -80,6 +80,12 @@ $hdr->setHeader('Host', undef);
 is($hdr->getHeader('Host'), undef, 'header retrieval 7');
 $hdr->setHeader('Host', '10.0.1.2');
 is($hdr->getHeader('Host'), '10.0.1.2', 'header retrieval 8');
+
+################################################################################
+## test getHeaders()
+my $headers = $hdr->getHeaders();
+is( scalar keys %{$headers}, 8, 'getHeaders ok' );
+is( $headers->{Accept}, '*/*', 'getHeaders value ok' );
 
 ################################################################################
 ## let's test out reference stuff
