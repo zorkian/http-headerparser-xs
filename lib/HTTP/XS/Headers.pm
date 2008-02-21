@@ -136,6 +136,16 @@ sub code {
     $self->setCodeText($code, $msg);
 }
 
+sub http_code_english {
+    my HTTP::XS::Headers $self = shift;
+    if (@_) {
+        return $HTTPCode->{shift()} || "";
+    } else {
+        return "" unless $self->response_code;
+        return $HTTPCode->{$self->response_code} || "";
+    }
+}
+
 # Preloaded methods go here.
 
 # Autoload methods go after =cut, and are processed by the autosplit program.
