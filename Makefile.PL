@@ -17,6 +17,7 @@ WriteMakefile(
     XSOPT             => '-C++',
     CCFLAGS           => '-g',
     CC                => 'g++',
+    LD                => 'g++',
 );
 if  (eval {require ExtUtils::Constant; 1}) {
   # If you edit these definitions to change the constants used by this module,
