@@ -1,4 +1,4 @@
-package HTTP::XS::Headers;
+package HTTP::HeaderParser::XS;
 
 use 5.008;
 use strict;
@@ -64,7 +64,7 @@ sub AUTOLOAD {
     my $constname;
     our $AUTOLOAD;
     ($constname = $AUTOLOAD) =~ s/.*:://;
-    croak "&HTTP::XS::Headers::constant not defined" if $constname eq 'constant';
+    croak "&HTTP::HeaderParser::XS::constant not defined" if $constname eq 'constant';
     my ($error, $val) = constant($constname);
     if ($error) { croak $error; }
     {
@@ -81,20 +81,20 @@ sub AUTOLOAD {
 }
 
 require XSLoader;
-XSLoader::load('HTTP::XS::Headers', $VERSION);
+XSLoader::load('HTTP::HeaderParser::XS', $VERSION);
 
 # create a very bare response to send to a user (mostly used internally)
 sub new_response {
     my $code = $_[1];
 
     my $msg = $HTTPCode->{$code} || "";
-    my $hdr = HTTP::XS::Headers->new(\"HTTP/1.0 $code $msg\r\n\r\n");
+    my $hdr = HTTP::HeaderParser::XS->new(\"HTTP/1.0 $code $msg\r\n\r\n");
     return $hdr;
 }
 
 # do some magic to determine content length
 sub content_length {
-    my HTTP::XS::Headers $self = $_[0];
+    my HTTP::HeaderParser::XS $self = $_[0];
 
     if ($self->isRequest()) {
         return 0 if $self->getMethod() == M_HEAD();
@@ -113,7 +113,7 @@ sub content_length {
 }
 
 sub set_version {
-    my HTTP::XS::Headers $self = $_[0];
+    my HTTP::HeaderParser::XS $self = $_[0];
     my $ver = $_[1];
 
     die "Bogus version" unless $ver =~ /^(\d+)\.(\d+)$/;
@@ -125,11 +125,11 @@ sub set_version {
 }
 
 sub clone {
-    return HTTP::XS::Headers->new( $_[0]->to_string_ref );
+    return HTTP::HeaderParser::XS->new( $_[0]->to_string_ref );
 }
 
 sub code {
-    my HTTP::XS::Headers $self = shift;
+    my HTTP::HeaderParser::XS $self = shift;
 
     my ($code, $msg) = @_;
     $msg ||= $self->http_code_english($code);
@@ -137,7 +137,7 @@ sub code {
 }
 
 sub http_code_english {
-    my HTTP::XS::Headers $self = shift;
+    my HTTP::HeaderParser::XS $self = shift;
     if (@_) {
         return $HTTPCode->{shift()} || "";
     } else {
@@ -157,13 +157,13 @@ __END__
 
 =head1 NAME
 
-HTTP::XS::Headers - XS extension for processing HTTP headers.
+HTTP::HeaderParser::XS - XS extension for processing HTTP headers.
 
 =head1 SYNOPSIS
 
-  use HTTP::XS::Headers;
+  use HTTP::HeaderParser::XS;
 
-  my $hdr = HTTP::XS::Headers->new( \"GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n" );
+  my $hdr = HTTP::HeaderParser::XS->new( \"GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n" );
   if ($hdr->getMethod == M_GET()) {
     print "GET: ", $hdr->getURI(), "\n";
     print "Connection: ", $hdr->getHeader('Connection'), "\n";
