@@ -20,7 +20,7 @@
 
 #include "const-c.inc"
 
-MODULE = HTTP::XS::Headers		PACKAGE = HTTP::XS::Headers		
+MODULE = HTTP::HeaderParser::XS		PACKAGE = HTTP::HeaderParser::XS
 
 INCLUDE: const-xs.inc
 

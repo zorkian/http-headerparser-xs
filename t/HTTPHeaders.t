@@ -7,7 +7,7 @@
 
 #die('update use test more line');
 use Test::More tests => 39;
-BEGIN { use_ok('HTTP::XS::Headers') };
+BEGIN { use_ok('HTTP::HeaderParser::XS') };
 
 
 my $fail = 0;
@@ -37,8 +37,8 @@ my $resstr = "HTTP/1.0 200 OK\r\nContent-type: text/html\r\nContent-length: 15\r
 
 ################################################################################
 ## make sure we can create a headers object
-my $hdr = HTTP::XS::Headers->new(\$reqstr);
-isa_ok($hdr, 'HTTP::XS::Headers');
+my $hdr = HTTP::HeaderParser::XS->new(\$reqstr);
+isa_ok($hdr, 'HTTP::HeaderParser::XS');
 
 ################################################################################
 ## verify that we parsed it right
@@ -89,16 +89,16 @@ is( $headers->{Accept}, '*/*', 'getHeaders value ok' );
 
 ################################################################################
 ## let's test out reference stuff
-$hdr = HTTP::XS::Headers->new(\$resstr);
-isa_ok($hdr, 'HTTP::XS::Headers');
+$hdr = HTTP::HeaderParser::XS->new(\$resstr);
+isa_ok($hdr, 'HTTP::HeaderParser::XS');
 is($hdr->to_string, $resstr, 'response 1 reconstruction (1)');
 my $ref = $hdr->to_string_ref;
 is($$ref, $resstr, 'response 1 reconstruction (2)');
 
 ################################################################################
 ## new_response testing
-$hdr = HTTP::XS::Headers->new_response(304);
-isa_ok($hdr, 'HTTP::XS::Headers');
+$hdr = HTTP::HeaderParser::XS->new_response(304);
+isa_ok($hdr, 'HTTP::HeaderParser::XS');
 is($hdr->getStatusCode(), 304, 'new_response test 1');
 is($hdr->getHeader('Test'), undef, 'new_response test 2');
 $hdr->setHeader('Test', 'Testing');
@@ -108,20 +108,12 @@ is($hdr->getHeader('Test'), undef, 'new_response test 4');
 
 ################################################################################
 ## make sure we can't get the old style invalid headers
-$hdr = HTTP::XS::Headers->new(\"HTTP/");
+$hdr = HTTP::HeaderParser::XS->new(\"HTTP/");
 is($hdr, undef, 'old bad header test');
 
 ################################################################################
-## check mapping from old to new
-#Perlbal::XS::HTTPHeaders::enable();
-#$hdr = Perlbal::HTTPHeaders->new(\$reqstr);
-#isa_ok($hdr, 'Perlbal::XS::HTTPHeaders');
-#$hdr = Perlbal::HTTPHeaders->new(\$resstr);
-#isa_ok($hdr, 'Perlbal::XS::HTTPHeaders');
-
-################################################################################
 ## regression test to make sure this bug isn't reintroduced
-$hdr = HTTP::XS::Headers->new(\"GET / HTTP/1.0\r\nHost: dog\r\n\r\n");
+$hdr = HTTP::HeaderParser::XS->new(\"GET / HTTP/1.0\r\nHost: dog\r\n\r\n");
 my $a = $hdr->getReconstructed();
 $hdr->header('Host', undef);
 $a = $hdr->getReconstructed();
@@ -130,7 +122,7 @@ $a = $hdr->getReconstructed();
 is(1, 1, 'regression test 1');
 
 # test setting codetext
-$hdr = HTTP::XS::Headers->new_response(404);
+$hdr = HTTP::HeaderParser::XS->new_response(404);
 ok($hdr->getStatusCode() == 404, "code is 404");
 $hdr->code(200, undef);
 ok($hdr->getStatusCode() == 200, "code changed to 200");

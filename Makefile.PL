@@ -3,11 +3,11 @@ use ExtUtils::MakeMaker;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 WriteMakefile(
-    NAME              => 'HTTP::XS::Headers',
-    VERSION_FROM      => 'lib/HTTP/XS/Headers.pm', # finds $VERSION
+    NAME              => 'HTTP::HeaderParser::XS',
+    VERSION_FROM      => 'lib/HTTP/HeaderParser/XS.pm', # finds $VERSION
     PREREQ_PM         => {},
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
-      (ABSTRACT_FROM  => 'lib/HTTP/XS/Headers.pm', # retrieve abstract from module
+      (ABSTRACT_FROM  => 'lib/HTTP/HeaderParser/XS.pm', # retrieve abstract from module
        AUTHOR         => 'Mark Smith <mark@xb95.com>') : ()),
     LIBS              => ['-lstdc++'], # e.g., '-lm'
     DEFINE            => '', # e.g., '-DHAVE_SOMETHING'
@@ -27,7 +27,7 @@ if  (eval {require ExtUtils::Constant; 1}) {
   my @names = (qw(H_REQUEST H_RESPONSE M_DELETE M_GET
 		 M_OPTIONS M_POST M_PUT M_HEAD));
   ExtUtils::Constant::WriteConstants(
-                                     NAME         => 'HTTP::XS::Headers',
+                                     NAME         => 'HTTP::HeaderParser::XS',
                                      NAMES        => \@names,
                                      DEFAULT_TYPE => 'IV',
                                      C_FILE       => 'const-c.inc',
