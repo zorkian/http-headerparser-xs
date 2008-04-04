@@ -7,9 +7,8 @@ README
 headers.cpp
 headers.h
 typemap
-t/HTTPHeaders.t
+t/10-basic.t
 fallback/const-c.inc
 fallback/const-xs.inc
-lib/HTTP/XS/Headers.pm
-lib/Perlbal/XS/HTTPHeaders.pm
+lib/HTTP/HeaderParser/XS.pm
 META.yml                                 Module meta-data (added by MakeMaker)

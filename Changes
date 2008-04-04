@@ -1,6 +1,6 @@
-Revision history for Perl extension HTTPHeaders.  See README for info.
+Revision history for Perl extension HTTP::HeaderParser::XS.
 
-0.20  Wed Feb 20 15:33:09 PST 2008
+0.20  Wed Apr 04 14:33:09 PDT 2008
     - add setter for uri field, and test
     - remove overall dependence on Perlbal for normal usage
         (as suggested by Andy Grundman)

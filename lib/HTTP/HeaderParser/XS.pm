@@ -152,46 +152,49 @@ sub http_code_english {
 
 1;
 __END__
-# Below is stub documentation for your module. You'd better edit it!
-# Right, I'm editing it.
 
 =head1 NAME
 
-HTTP::HeaderParser::XS - XS extension for processing HTTP headers.
+HTTP::HeaderParser::XS - an XS extension for processing HTTP headers.
 
 =head1 SYNOPSIS
 
   use HTTP::HeaderParser::XS;
 
-  my $hdr = HTTP::HeaderParser::XS->new( \"GET / HTTP/1.0\r\nConnection: keep-alive\r\n\r\n" );
-  if ($hdr->getMethod == M_GET()) {
-    print "GET: ", $hdr->getURI(), "\n";
-    print "Connection: ", $hdr->getHeader('Connection'), "\n";
+  my $hdr = HTTP::HeaderParser::XS->new( \"GET / HTTP/1.0\r\nConnection: keep-alive\r\nHost: www.bar.com\r\n\r\n" );
+
+  if ( $hdr->isResponse ) {
+    # this is not a response in this simple demo, but it could be
+    print "Response code: " . $hdr->getStatusCode . "\n";
+    print "Connection header: " . $hdr->getHeader( 'Connection' ) . "\n";
+
+  } else {
+    # see if it's a GET request
+    if ( $hdr->getMethod == M_GET ) {
+      print "GET: " . $hdr->getURI() . "\n";
+
+      # now let's rewrite the host header and rewrite the header :-)
+      print "Host header was: " . $hdr->getHeader( 'Host' ) . "\n";
+      $hdr->setHeader( 'Host', 'www.foo.com' );
+
+      # show new headers, now that we changed something
+      print "New headers:\n";
+      print $hdr->getReconstructed . "\n";
+      
+    } else {
+      print "Not a GET request!\n";
+    }
   }
 
 =head1 DESCRIPTION
 
-This module is used to read HTTP headers from a string and to parse them
-into an internal storage format for easy access and modification.  You
-can also ask the module to reconstitute the headers into one big string,
-useful if you're writing a proxy and need to read and write headers while
-maintaining the ability to modify individual parts of the whole.
+This module parses HTTP headers using a C++ state machine.  (Hence this
+being an XS module.)  The goal is to be fast, not necessarily to do everything
+you could ever want.
 
-The goal is to be fast.  This is a lot faster than doing all of the text
-processing in Perl directly, and a lot of the flexibility of Perl is
-maintained by implementing higher level logic in the Perl library and
-leaving the parsing down to the C++ side.
-
-=head2 Exportable constants
-
-  H_REQUEST
-  H_RESPONSE
-  M_GET
-  M_POST
-  M_HEAD
-  M_OPTIONS
-  M_PUT
-  M_DELETE
+Headers are not static, you can parse them, munge them, or even build them
+using this module.  See the SYNOPSIS for more information on how to use this
+module.
 
 =head1 KNOWN BUGS
 
@@ -199,13 +202,9 @@ There are no known bugs at this time.  Please report any you find!
 
 =head1 SEE ALSO
 
-Perlbal, and by extension this module, can be discussed by joining the
-Perlbal mailing list on http://lists.danga.com/.
-
-Please see the original Perlbal::HTTPHeaders module implemented entirely in
-Perl in the Perlbal source tree available at http://code.sixapart.com/svn/perlbal/.
-
-Feel free to contact the author as well.
+There is no place designated for support of this module.  If you would like to
+contact the author, please see the email address below.  Or, find him on the
+Perl IRC network as 'xb95', usually in various channels.
 
 =head1 AUTHOR
 
