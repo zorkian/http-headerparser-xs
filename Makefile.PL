@@ -18,6 +18,16 @@ WriteMakefile(
     CCFLAGS           => '-g',
     CC                => 'g++',
     LD                => 'g++',
+    META_MERGE        => {
+        'meta-spec' => { version => 2 },
+        resources => {
+            repository => {
+                type => 'git',
+                url => 'https://github.com/xb95/http-headerparser-xs.git',
+                web => 'https://github.com/xb95/http-headerparser-xs',
+            },
+        },
+    },
 );
 if  (eval {require ExtUtils::Constant; 1}) {
   # If you edit these definitions to change the constants used by this module,
